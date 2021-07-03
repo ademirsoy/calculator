@@ -2,6 +2,7 @@ package com.ademirsoy.calculator;
 
 import com.ademirsoy.calculator.math.Calculator;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class Application {
@@ -15,7 +16,7 @@ public class Application {
         while (in.hasNext()) {
             try {
                 String line = in.nextLine();
-                String result = expressionParser.calculateExpression(line);
+                BigDecimal result = expressionParser.calculateExpression(line);
                 System.out.println(result);
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());

@@ -19,13 +19,18 @@ public class ExpressionParser {
         this.calculator = calculator;
     }
 
-    public String calculateExpression(String expression) {
+    public BigDecimal calculateExpression(String expression) {
         expression = expression.replaceAll(" ", "");
         Pattern operatorPattern = Pattern.compile("[+, \\-, \\/, *]");
         String[] operands = operatorPattern.split(expression);
-        List<String> operandList =  new LinkedList<>(Arrays.asList(operands));
-        if (operandList.size() < 2) {
+        if (operands.length < 2) {
             throw new InvalidExpressionException("Invalid expression! There should be at least 2 operands and one of these operators: [+ - * /]");
+        }
+        List<BigDecimal> operandList;
+        try {
+            operandList = Arrays.stream(operands).map(BigDecimal::new).collect(Collectors.toCollection(LinkedList::new));
+        } catch (NumberFormatException e) {
+            throw new InvalidExpressionException("Invalid expression! Only numbers and these expressions are supported: [+ - * /]");
         }
 
         Pattern operandPattern = Pattern.compile("[0-9]*\\.?[0-9]+");
@@ -38,7 +43,7 @@ public class ExpressionParser {
         return calculate(operandList, operatorList);
     }
 
-    private String calculate(List<String> operandList, List<String> operatorList) {
+    private BigDecimal calculate(List<BigDecimal> operandList, List<String> operatorList) {
 
         int i = 0;
         while (operandList.size() > 1) {
@@ -47,9 +52,9 @@ public class ExpressionParser {
             }
             if (shouldPerformOperation(operatorList, i)) {
                 String operator = operatorList.get(i);
-                String operand1 = operandList.get(i);
-                String operand2 = operandList.get(i + 1);
-                String value = calculateOperation(operand1, operand2, operator);
+                BigDecimal operand1 = operandList.get(i);
+                BigDecimal operand2 = operandList.get(i + 1);
+                BigDecimal value = this.calculator.calculate(operand1, operand2, operator);
                 operandList.remove(i);
                 operatorList.remove(i);
                 operandList.set(i, value);
@@ -62,11 +67,6 @@ public class ExpressionParser {
         } else {
             return operandList.get(0);
         }
-    }
-
-
-    private String calculateOperation(String operand1, String operand2, String operator) {
-        return this.calculator.calculate(new BigDecimal(operand1), new BigDecimal(operand2), operator).toString();
     }
 
     private boolean shouldPerformOperation(List<String> operatorList, int index) {
