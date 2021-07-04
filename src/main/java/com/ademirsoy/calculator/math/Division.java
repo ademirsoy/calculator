@@ -6,7 +6,7 @@ import java.math.RoundingMode;
 public class Division implements Calculation {
 
     @Override
-    public BigDecimal calculate(BigDecimal operand1, BigDecimal operand2) {
-        return operand1.divide(operand2, 2, RoundingMode.HALF_EVEN);
+    public BigDecimal calculate(BigDecimal... operands) {
+        return operands[0].divide(operands[1], 2, RoundingMode.HALF_EVEN);
     }
 }

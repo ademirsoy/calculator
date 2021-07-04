@@ -5,7 +5,11 @@ import java.math.BigDecimal;
 public class Addition implements Calculation {
 
     @Override
-    public BigDecimal calculate(BigDecimal operand1, BigDecimal operand2) {
-        return operand1.add(operand2);
+    public BigDecimal calculate(BigDecimal... operands) {
+        BigDecimal total = BigDecimal.ZERO;
+        for (BigDecimal operand : operands) {
+            total = total.add(operand);
+        }
+        return total;
     }
 }

@@ -21,10 +21,25 @@ class CalculatorTest {
         String sign = Operator.ADDITION.getSign();
 
         //WHEN
-        BigDecimal result = calculator.calculate(operand1, operand2, sign);
+        BigDecimal result = calculator.calculate(sign, operand1, operand2);
 
         //THEN
         assertEquals(new BigDecimal("31.0"), result);
+    }
+
+    @Test
+    void calculate_shouldAddNumbers_whenMultipleAdditionOperation() {
+        //GIVEN
+        BigDecimal operand1 = new BigDecimal("10.5");
+        BigDecimal operand2 = new BigDecimal("20.5");
+        BigDecimal operand3 = new BigDecimal("5");
+        String sign = Operator.ADDITION.getSign();
+
+        //WHEN
+        BigDecimal result = calculator.calculate(sign, operand1, operand2, operand3);
+
+        //THEN
+        assertEquals(new BigDecimal("36.0"), result);
     }
 
     @Test
@@ -35,7 +50,7 @@ class CalculatorTest {
         String sign = Operator.SUBTRACTION.getSign();
 
         //WHEN
-        BigDecimal result = calculator.calculate(operand1, operand2, sign);
+        BigDecimal result = calculator.calculate(sign, operand1, operand2);
 
         //THEN
         assertEquals(new BigDecimal("-10.0"), result);
@@ -49,10 +64,25 @@ class CalculatorTest {
         String sign = Operator.MULTIPLICATION.getSign();
 
         //WHEN
-        BigDecimal result = calculator.calculate(operand1, operand2, sign);
+        BigDecimal result = calculator.calculate(sign, operand1, operand2);
 
         //THEN
         assertEquals(new BigDecimal("15"), result);
+    }
+
+    @Test
+    void calculate_shouldMultiplyNumbers_whenMultipleMultiplicationOperation() {
+        //GIVEN
+        BigDecimal operand1 = new BigDecimal("5");
+        BigDecimal operand2 = new BigDecimal("3");
+        BigDecimal operand3 = new BigDecimal("10");
+        String sign = Operator.MULTIPLICATION.getSign();
+
+        //WHEN
+        BigDecimal result = calculator.calculate(sign, operand1, operand2, operand3);
+
+        //THEN
+        assertEquals(new BigDecimal("150"), result);
     }
 
     @Test
@@ -63,7 +93,7 @@ class CalculatorTest {
         String sign = Operator.DIVISION.getSign();
 
         //WHEN
-        BigDecimal result = calculator.calculate(operand1, operand2, sign);
+        BigDecimal result = calculator.calculate(sign, operand1, operand2);
 
         //THEN
         assertEquals(new BigDecimal("5.00"), result);
@@ -77,7 +107,7 @@ class CalculatorTest {
         String sign = Operator.DIVISION.getSign();
 
         //WHEN
-        BigDecimal result = calculator.calculate(operand1, operand2, sign);
+        BigDecimal result = calculator.calculate(sign, operand1, operand2);
 
         //THEN
         assertEquals(new BigDecimal("3.33"), result);
@@ -92,7 +122,7 @@ class CalculatorTest {
 
         //WHEN
         Assertions.assertThrows(InvalidOperatorException.class, () -> {
-            calculator.calculate(operand1, operand2, unsupportedSign);
+            calculator.calculate(unsupportedSign, operand1, operand2);
         });
     }
 
@@ -105,7 +135,18 @@ class CalculatorTest {
 
         //WHEN
         Assertions.assertThrows(ArithmeticException.class, () -> {
-            calculator.calculate(operand1, operand2, sign);
+            calculator.calculate(sign, operand1, operand2);
+        });
+    }
+
+    @Test
+    void calculate_shouldThrowException_whenNoOperandGiven() {
+        //GIVEN
+        String sign = Operator.DIVISION.getSign();
+
+        //WHEN
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            calculator.calculate(sign);
         });
     }
 }

@@ -18,12 +18,15 @@ public class Calculator {
         this.supportedOperations.put(Operator.MULTIPLICATION.getSign(), new Multiplication());
     }
 
-    public BigDecimal calculate(BigDecimal operand1, BigDecimal operand2, String operator) {
+    public BigDecimal calculate(String operator, BigDecimal... operands) {
         Calculation calculation = this.supportedOperations.get(operator);
         if (calculation == null) {
             throw new InvalidOperatorException("Unsupported operator: " + operator + ". Supported operators are: " +
                     this.supportedOperations.keySet().toString());
         }
-        return calculation.calculate(operand1, operand2);
+        if (operands.length == 0) {
+            throw new IllegalArgumentException("At least one operand should be given!");
+        }
+        return calculation.calculate(operands);
     }
 }

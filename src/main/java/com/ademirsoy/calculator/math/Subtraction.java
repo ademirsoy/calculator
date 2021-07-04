@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class Subtraction implements Calculation {
 
     @Override
-    public BigDecimal calculate(BigDecimal operand1, BigDecimal operand2) {
-        return operand1.subtract(operand2);
+    public BigDecimal calculate(BigDecimal... operands) {
+        return operands[0].subtract(operands[1]);
     }
 }

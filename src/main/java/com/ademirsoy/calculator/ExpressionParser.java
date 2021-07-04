@@ -54,7 +54,7 @@ public class ExpressionParser {
                 String operator = operatorList.get(i);
                 BigDecimal operand1 = operandList.get(i);
                 BigDecimal operand2 = operandList.get(i + 1);
-                BigDecimal value = this.calculator.calculate(operand1, operand2, operator);
+                BigDecimal value = this.calculator.calculate(operator, operand1, operand2);
                 operandList.remove(i);
                 operatorList.remove(i);
                 operandList.set(i, value);
