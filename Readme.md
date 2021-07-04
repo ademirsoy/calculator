@@ -1,7 +1,7 @@
 # Calculator
 
 - The application is a simple calculator that supports the following operations: 
-  Addition, Subtraction, Multiplication and Division
+  Addition (+), Subtraction (-), Multiplication (*) and Division (/)
 - Calculator supports multi operand expressions and follows `bodmas` rule for operator precedence.
 In this case, division and multiplication has precedence over addition and subtraction.
 - The application reads input from a single line and prints the result back to console.
@@ -33,4 +33,4 @@ In this case, division and multiplication has precedence over addition and subtr
   **`java -jar target/calculator-1.0.jar`**
 
 ### RUN WITH DOCKER
-**`docker run  alidemirsoy/calculator`**
+**`docker run -it alidemirsoy/calculator`**
